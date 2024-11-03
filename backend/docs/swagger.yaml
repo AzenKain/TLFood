@@ -1,0 +1,574 @@
+definitions:
+  dtos.CreateVersionStarRailDto:
+    properties:
+      asset_bundle_url:
+        type: string
+      customIfixVersion:
+        type: integer
+      customMdkResVersion:
+        type: integer
+      ex_resource_url:
+        type: string
+      ifixUrl:
+        type: string
+      lua_url:
+        type: string
+      lua_version:
+        type: string
+      version_name:
+        type: string
+    required:
+    - asset_bundle_url
+    - ex_resource_url
+    - lua_url
+    - version_name
+    type: object
+  dtos.LoginDto:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  dtos.SignUpDto:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+  dtos.UpdateStarRailDataDto:
+    properties:
+      avatars:
+        additionalProperties:
+          $ref: '#/definitions/models.AvatarJson'
+        type: object
+      battle_config:
+        $ref: '#/definitions/models.BattleConfigJson'
+      lightcones:
+        items:
+          $ref: '#/definitions/models.LightconeJson'
+        type: array
+      relics:
+        items:
+          $ref: '#/definitions/models.RelicJson'
+        type: array
+    type: object
+  dtos.UpdateVersionStarRailDto:
+    properties:
+      asset_bundle_url:
+        type: string
+      customIfixVersion:
+        type: integer
+      customMdkResVersion:
+        type: integer
+      ex_resource_url:
+        type: string
+      ifixUrl:
+        type: string
+      lua_url:
+        type: string
+      lua_version:
+        type: string
+      version_id:
+        type: string
+      version_name:
+        type: string
+    required:
+    - version_id
+    type: object
+  models.AuthResponse:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+    type: object
+  models.AvatarData:
+    properties:
+      rank:
+        type: integer
+      skills:
+        additionalProperties:
+          type: integer
+        type: object
+    type: object
+  models.AvatarJson:
+    properties:
+      avatar_id:
+        type: integer
+      data:
+        $ref: '#/definitions/models.AvatarData'
+      level:
+        type: integer
+      owner_uid:
+        type: integer
+      promotion:
+        type: integer
+      sp_max:
+        type: integer
+      sp_value:
+        type: integer
+      techniques:
+        items:
+          type: integer
+        type: array
+    type: object
+  models.BattleBuffJson:
+    properties:
+      dynamic_key:
+        $ref: '#/definitions/models.DynamicKeyJson'
+      id:
+        type: integer
+      level:
+        type: integer
+    type: object
+  models.BattleConfigJson:
+    properties:
+      battle_type:
+        type: string
+      blessings:
+        items:
+          $ref: '#/definitions/models.BattleBuffJson'
+        type: array
+      custom_stats:
+        items:
+          $ref: '#/definitions/models.SubAffix'
+        type: array
+      cycle_count:
+        type: integer
+      monsters:
+        items:
+          items:
+            $ref: '#/definitions/models.MonsterJson'
+          type: array
+        type: array
+      path_resonance_id:
+        type: integer
+      stage_id:
+        type: integer
+    type: object
+  models.DynamicKeyJson:
+    properties:
+      key:
+        type: string
+      value:
+        type: number
+    type: object
+  models.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  models.LightconeJson:
+    properties:
+      equip_avatar:
+        type: integer
+      internal_uid:
+        type: integer
+      item_id:
+        type: integer
+      level:
+        type: integer
+      promotion:
+        type: integer
+      rank:
+        type: integer
+    type: object
+  models.MonsterJson:
+    properties:
+      amount:
+        type: integer
+      level:
+        type: integer
+      monster_id:
+        type: integer
+    type: object
+  models.Position:
+    properties:
+      rot_y:
+        type: integer
+      x:
+        type: integer
+      "y":
+        type: integer
+      z:
+        type: integer
+    type: object
+  models.RelicJson:
+    properties:
+      equip_avatar:
+        type: integer
+      internal_uid:
+        type: integer
+      level:
+        type: integer
+      main_affix_id:
+        type: integer
+      relic_id:
+        type: integer
+      relic_set_id:
+        type: integer
+      sub_affixes:
+        items:
+          $ref: '#/definitions/models.SubAffix'
+        type: array
+    type: object
+  models.Scene:
+    properties:
+      entry_id:
+        type: integer
+      floor_id:
+        type: integer
+      plane_id:
+        type: integer
+    type: object
+  models.StarRailData:
+    properties:
+      _id:
+        type: string
+      avatars:
+        additionalProperties:
+          $ref: '#/definitions/models.AvatarJson'
+        type: object
+      battle_config:
+        $ref: '#/definitions/models.BattleConfigJson'
+      created_at:
+        type: integer
+      lightcones:
+        items:
+          $ref: '#/definitions/models.LightconeJson'
+        type: array
+      lineups:
+        additionalProperties:
+          type: integer
+        type: object
+      position:
+        $ref: '#/definitions/models.Position'
+      relics:
+        items:
+          $ref: '#/definitions/models.RelicJson'
+        type: array
+      scene:
+        $ref: '#/definitions/models.Scene'
+      updated_at:
+        type: integer
+      user_id:
+        type: string
+      user_uid:
+        type: string
+    type: object
+  models.SubAffix:
+    properties:
+      count:
+        type: integer
+      step:
+        type: integer
+      sub_affix_id:
+        type: integer
+    type: object
+  models.User:
+    properties:
+      _id:
+        type: string
+      created_at:
+        type: integer
+      device_id:
+        type: string
+      email:
+        type: string
+      hash:
+        type: string
+      refresh_token:
+        type: string
+      role:
+        items:
+          type: string
+        type: array
+      uid:
+        type: string
+      updated_at:
+        type: integer
+      username:
+        type: string
+    type: object
+  models.VersionStarRail:
+    properties:
+      _id:
+        type: string
+      asset_bundle_url:
+        type: string
+      customIfixVersion:
+        type: integer
+      customMdkResVersion:
+        type: integer
+      ex_resource_url:
+        type: string
+      ifixUrl:
+        type: string
+      lua_url:
+        type: string
+      lua_version:
+        type: string
+      version_name:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Login a user and return JWT token
+      parameters:
+      - description: Login data
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.LoginDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.AuthResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: User login
+      tags:
+      - Auth
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Refresh access token using refresh token
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Access token refreshed successfully
+          schema:
+            $ref: '#/definitions/models.AuthResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Refresh JWT token
+      tags:
+      - Auth
+  /auth/refresh-device:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Clears and resets the Device ID for the authenticated user
+        Format: RFC3339 (e.g., "2006-01-02T15:04:05Z07:00")
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Device ID refreshed successfully
+          schema:
+            $ref: '#/definitions/models.User'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Refresh the Device ID for a user
+      tags:
+      - users
+  /auth/signup:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user
+      parameters:
+      - description: Sign Up data
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.SignUpDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.AuthResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: User registration
+      tags:
+      - Auth
+  /data/update:
+    patch:
+      consumes:
+      - application/json
+      description: Update the StarRail data of the specified user with the provided
+        data
+      parameters:
+      - description: StarRail data to update
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateStarRailDataDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.StarRailData'
+        "400":
+          description: Invalid request data
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update StarRail data for a user
+      tags:
+      - starrail
+  /version/{VersionName}:
+    get:
+      consumes:
+      - application/json
+      description: Get version information based on the given version name
+      parameters:
+      - description: Version name
+        in: path
+        name: VersionName
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.VersionStarRail'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get version information by name
+      tags:
+      - versions
+  /version/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new version with the provided details
+      parameters:
+      - description: Version data
+        in: body
+        name: version
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateVersionStarRailDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.VersionStarRail'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a new version
+      tags:
+      - versions
+  /version/update:
+    patch:
+      consumes:
+      - application/json
+      description: Update version information based on the provided version data
+      parameters:
+      - description: Version update data
+        in: body
+        name: version
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateVersionStarRailDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.VersionStarRail'
+        "400":
+          description: Invalid ID format
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Version not found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Error updating version
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update version information
+      tags:
+      - versions
+swagger: "2.0"

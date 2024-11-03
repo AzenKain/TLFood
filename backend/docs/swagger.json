@@ -1,0 +1,883 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "description": "Login a user and return JWT token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User login",
+                "parameters": [
+                    {
+                        "description": "Login data",
+                        "name": "dto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.LoginDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.AuthResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/refresh": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Refresh access token using refresh token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Refresh JWT token",
+                "responses": {
+                    "201": {
+                        "description": "Access token refreshed successfully",
+                        "schema": {
+                            "$ref": "#/definitions/models.AuthResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/refresh-device": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Clears and resets the Device ID for the authenticated user\nFormat: RFC3339 (e.g., \"2006-01-02T15:04:05Z07:00\")",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Refresh the Device ID for a user",
+                "responses": {
+                    "201": {
+                        "description": "Device ID refreshed successfully",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/signup": {
+            "post": {
+                "description": "Register a new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User registration",
+                "parameters": [
+                    {
+                        "description": "Sign Up data",
+                        "name": "dto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.SignUpDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.AuthResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/data/update": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update the StarRail data of the specified user with the provided data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "starrail"
+                ],
+                "summary": "Update StarRail data for a user",
+                "parameters": [
+                    {
+                        "description": "StarRail data to update",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.UpdateStarRailDataDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.StarRailData"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request data",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/version/create": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create a new version with the provided details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "versions"
+                ],
+                "summary": "Create a new version",
+                "parameters": [
+                    {
+                        "description": "Version data",
+                        "name": "version",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.CreateVersionStarRailDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.VersionStarRail"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/version/update": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update version information based on the provided version data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "versions"
+                ],
+                "summary": "Update version information",
+                "parameters": [
+                    {
+                        "description": "Version update data",
+                        "name": "version",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.UpdateVersionStarRailDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.VersionStarRail"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID format",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Version not found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Error updating version",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/version/{VersionName}": {
+            "get": {
+                "description": "Get version information based on the given version name",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "versions"
+                ],
+                "summary": "Get version information by name",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Version name",
+                        "name": "VersionName",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.VersionStarRail"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dtos.CreateVersionStarRailDto": {
+            "type": "object",
+            "required": [
+                "asset_bundle_url",
+                "ex_resource_url",
+                "lua_url",
+                "version_name"
+            ],
+            "properties": {
+                "asset_bundle_url": {
+                    "type": "string"
+                },
+                "customIfixVersion": {
+                    "type": "integer"
+                },
+                "customMdkResVersion": {
+                    "type": "integer"
+                },
+                "ex_resource_url": {
+                    "type": "string"
+                },
+                "ifixUrl": {
+                    "type": "string"
+                },
+                "lua_url": {
+                    "type": "string"
+                },
+                "lua_version": {
+                    "type": "string"
+                },
+                "version_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.LoginDto": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.SignUpDto": {
+            "type": "object",
+            "required": [
+                "email",
+                "password",
+                "username"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.UpdateStarRailDataDto": {
+            "type": "object",
+            "properties": {
+                "avatars": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/models.AvatarJson"
+                    }
+                },
+                "battle_config": {
+                    "$ref": "#/definitions/models.BattleConfigJson"
+                },
+                "lightcones": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.LightconeJson"
+                    }
+                },
+                "relics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.RelicJson"
+                    }
+                }
+            }
+        },
+        "dtos.UpdateVersionStarRailDto": {
+            "type": "object",
+            "required": [
+                "version_id"
+            ],
+            "properties": {
+                "asset_bundle_url": {
+                    "type": "string"
+                },
+                "customIfixVersion": {
+                    "type": "integer"
+                },
+                "customMdkResVersion": {
+                    "type": "integer"
+                },
+                "ex_resource_url": {
+                    "type": "string"
+                },
+                "ifixUrl": {
+                    "type": "string"
+                },
+                "lua_url": {
+                    "type": "string"
+                },
+                "lua_version": {
+                    "type": "string"
+                },
+                "version_id": {
+                    "type": "string"
+                },
+                "version_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.AuthResponse": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "refresh_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.AvatarData": {
+            "type": "object",
+            "properties": {
+                "rank": {
+                    "type": "integer"
+                },
+                "skills": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
+        "models.AvatarJson": {
+            "type": "object",
+            "properties": {
+                "avatar_id": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/models.AvatarData"
+                },
+                "level": {
+                    "type": "integer"
+                },
+                "owner_uid": {
+                    "type": "integer"
+                },
+                "promotion": {
+                    "type": "integer"
+                },
+                "sp_max": {
+                    "type": "integer"
+                },
+                "sp_value": {
+                    "type": "integer"
+                },
+                "techniques": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
+        "models.BattleBuffJson": {
+            "type": "object",
+            "properties": {
+                "dynamic_key": {
+                    "$ref": "#/definitions/models.DynamicKeyJson"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "level": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.BattleConfigJson": {
+            "type": "object",
+            "properties": {
+                "battle_type": {
+                    "type": "string"
+                },
+                "blessings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.BattleBuffJson"
+                    }
+                },
+                "custom_stats": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.SubAffix"
+                    }
+                },
+                "cycle_count": {
+                    "type": "integer"
+                },
+                "monsters": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/models.MonsterJson"
+                        }
+                    }
+                },
+                "path_resonance_id": {
+                    "type": "integer"
+                },
+                "stage_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.DynamicKeyJson": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
+                }
+            }
+        },
+        "models.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.LightconeJson": {
+            "type": "object",
+            "properties": {
+                "equip_avatar": {
+                    "type": "integer"
+                },
+                "internal_uid": {
+                    "type": "integer"
+                },
+                "item_id": {
+                    "type": "integer"
+                },
+                "level": {
+                    "type": "integer"
+                },
+                "promotion": {
+                    "type": "integer"
+                },
+                "rank": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.MonsterJson": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "level": {
+                    "type": "integer"
+                },
+                "monster_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Position": {
+            "type": "object",
+            "properties": {
+                "rot_y": {
+                    "type": "integer"
+                },
+                "x": {
+                    "type": "integer"
+                },
+                "y": {
+                    "type": "integer"
+                },
+                "z": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.RelicJson": {
+            "type": "object",
+            "properties": {
+                "equip_avatar": {
+                    "type": "integer"
+                },
+                "internal_uid": {
+                    "type": "integer"
+                },
+                "level": {
+                    "type": "integer"
+                },
+                "main_affix_id": {
+                    "type": "integer"
+                },
+                "relic_id": {
+                    "type": "integer"
+                },
+                "relic_set_id": {
+                    "type": "integer"
+                },
+                "sub_affixes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.SubAffix"
+                    }
+                }
+            }
+        },
+        "models.Scene": {
+            "type": "object",
+            "properties": {
+                "entry_id": {
+                    "type": "integer"
+                },
+                "floor_id": {
+                    "type": "integer"
+                },
+                "plane_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.StarRailData": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "avatars": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/models.AvatarJson"
+                    }
+                },
+                "battle_config": {
+                    "$ref": "#/definitions/models.BattleConfigJson"
+                },
+                "created_at": {
+                    "type": "integer"
+                },
+                "lightcones": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.LightconeJson"
+                    }
+                },
+                "lineups": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "integer"
+                    }
+                },
+                "position": {
+                    "$ref": "#/definitions/models.Position"
+                },
+                "relics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.RelicJson"
+                    }
+                },
+                "scene": {
+                    "$ref": "#/definitions/models.Scene"
+                },
+                "updated_at": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "string"
+                },
+                "user_uid": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.SubAffix": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "step": {
+                    "type": "integer"
+                },
+                "sub_affix_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.User": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "integer"
+                },
+                "device_id": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "hash": {
+                    "type": "string"
+                },
+                "refresh_token": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "uid": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.VersionStarRail": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "asset_bundle_url": {
+                    "type": "string"
+                },
+                "customIfixVersion": {
+                    "type": "integer"
+                },
+                "customMdkResVersion": {
+                    "type": "integer"
+                },
+                "ex_resource_url": {
+                    "type": "string"
+                },
+                "ifixUrl": {
+                    "type": "string"
+                },
+                "lua_url": {
+                    "type": "string"
+                },
+                "lua_version": {
+                    "type": "string"
+                },
+                "version_name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
