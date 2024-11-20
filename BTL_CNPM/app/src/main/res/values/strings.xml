@@ -16,4 +16,7 @@
     <string name="enter_verification_code">Enter Verification Code</string>
     <string name="enter_code">Enter code</string>
     <string name="check_your_email_for_code_or">Check your email for code or</string>
+    <string name="product_name">Product Name</string>
+    <string name="price">Price</string>
+
 </resources>
